@@ -1,10 +1,18 @@
-import { FETCH_DATA, UPDATE_TEAM, CLEAR_TEAM, SET_ERROR } from '../actions';
+import { 
+    FETCH_DATA, 
+    UPDATE_TEAM, 
+    CLEAR_TEAM, 
+    ADD_NICKNAME, 
+    TOGGLE_EDIT_NICKNAME,
+    SET_ERROR 
+} from '../actions';
 
 const initialState = {
     team: [],
     teamSize: 0,
     isFetchingData: false,
-    error: ''
+    error: '',
+    isEditingNickname: false
 };
 
 export const pokemonReducer = (state = initialState, action) => {
@@ -38,6 +46,18 @@ export const pokemonReducer = (state = initialState, action) => {
                 isFetchingData: false,
                 error: action.payload
             };
+        case ADD_NICKNAME:
+            return {
+                ...state,
+                
+                team: state.team.map( (item, key) => key === action.payload.key ? {...state.team[key], nickname: action.payload.nickname} : {...state.team[key]} ),
+                isEditingNickname: false
+            }
+        case TOGGLE_EDIT_NICKNAME:
+            return {
+                ...state,
+                isEditingNickname: true
+            }
         default:
             return state;
     }

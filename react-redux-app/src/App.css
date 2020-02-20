@@ -51,6 +51,7 @@
 
 .team-card{
   border: 1px solid black;
+  border-radius: 12px;
   width: 31%;
   margin: 1%;
   text-align: left;
@@ -67,6 +68,26 @@
 .team-card img{
   width: 70%;
   margin: 0 auto;
+}
+
+.team-card form{
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.nickname-toggle:hover{
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nickname{
+  width: 80%;
+}
+
+.nickname-btn{
+  width: 20%;
 }
 
 .moves{

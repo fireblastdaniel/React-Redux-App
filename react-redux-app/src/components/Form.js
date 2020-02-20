@@ -8,12 +8,18 @@ const Form = props => {
     const [activePokemon, setActivePokemon] = useState('')
 
     const handleGetData = e => {
-        if(props.teamSize < 6){
-            e.preventDefault();
+        e.preventDefault();
+        if(!activePokemon){ 
+         } else if(props.teamSize < 6){
             props.getData(activePokemon);
         } else {
-            //set warning of full team
+            //notify user that team is full
         }
+    }
+
+    const handleClearTeam = e => {
+        e.preventDefault();
+        props.clearTeam();
     }
 
     return (
@@ -24,7 +30,7 @@ const Form = props => {
                     {kantoPokemon.map( (item, dex) => <option value={item} key={dex}>{item}</option>)}
                 </select>
                 <input type='submit' onClick={handleGetData} value='Add to Team'/>
-                <input type='button' onClick={clearTeam} value='Clear Team' />
+                <input type='button' onClick={handleClearTeam} value='Clear Team' />
             </form>
         </div>
     );

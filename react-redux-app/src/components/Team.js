@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { addNickname } from '../actions'
 
 import TeamCard from './TeamCard';
 import EmptyTeamCard from './EmptyTeamCard';
@@ -10,13 +11,17 @@ const Team = props => {
         empty.push(<EmptyTeamCard key={ i+10 } />)
     }
 
+    const handleAddNickname = (nickname, key) => {
+        props.addNickname(nickname, key);
+    }
+    console.log(props)
     return(
         <>
         {!props.error ? (
             <div className='team-container'>
                 {
                     props.team.map( (item, i) => (
-                            <TeamCard pokemon={item} key={i}/>
+                            <TeamCard pokemon={item} key={i} posn={i} setNickname={handleAddNickname} />
                     ))
                 }
                 {   empty.map( item => item)    }
@@ -38,5 +43,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {}
+    { addNickname }
 ) (Team);
