@@ -77,6 +77,17 @@ export const pokemonReducer = (state = initialState, action) => {
                 ...state,
                 isEditingAbility: action.payload
             }
+        case CHANGE_MOVES:
+            return {
+                ...state,
+                team: state.team.map( (item, key) => key === action.payload.key ? {...state.team[key], chosenMoves: action.payload.moves} : {...state.team[key]} ),
+                isEditingMoves: -1
+            }
+        case TOGGLE_EDIT_MOVES:
+            return {
+                ...state,
+                isEditingMoves: action.payload
+            }
         default:
             return state;
     }

@@ -6,7 +6,11 @@ import { toggleEditNickname, addNickname, removePokemon, changeAbility, toggleEd
 
 const TeamCard = props => {
     const [nickname, setNickname] = useState('');
-    const [ability, setAbility] = useState('')
+    const [ability, setAbility] = useState('');
+    const [firstMove, setFirstMove] = useState('');
+    const [secondMove, setSecondMove] = useState('');
+    const [thirdMove, setThirdMove] = useState('');
+    const [fourthMove, setFourthMove] = useState('');
 
     const handleNicknameChange = e => {
         setNickname(e.target.value)
@@ -15,6 +19,46 @@ const TeamCard = props => {
     const handleAbilityChange = e => {
         setAbility(e.target.value)
     }
+
+    const handleFirstMoveChange = e => {
+        setFirstMove(e.target.value);
+    }
+    const handleSecondMoveChange = e => {
+        setSecondMove(e.target.value);
+    }
+    const handleThirdMoveChange = e => {
+        setThirdMove(e.target.value);
+    }
+    const handleFourthMoveChange = e => {
+        setFourthMove(e.target.value);
+    }
+
+    const validateMoves = () => {
+        if(!firstMove && !secondMove && !thirdMove && !fourthMove)
+            return false;
+        const arr = [firstMove, secondMove, thirdMove, fourthMove].filter( item => {return item !== ''} )
+        if( (new Set(arr)).size !== arr.length )
+            return false;
+        return true;
+    }
+
+    const handleSumbitMoves = () => {
+        if(!validateMoves())
+            return;
+        else{
+            const movesArray = [firstMove, secondMove, thirdMove, fourthMove].filter( item => { return item !== ''} )
+            props.changeMoves(movesArray, props.posn)
+        }
+    }
+
+    const handleToggleEditMoves = () => {
+        setFirstMove('');
+        setSecondMove('');
+        setThirdMove('');
+        setFourthMove('');
+        props.toggleEditMoves(props.posn)
+    }
+
     console.log(props)
     return (
         
@@ -43,12 +87,41 @@ const TeamCard = props => {
                         }</td>
                 </tr>
                 <tr>
-                    <td className='toggle' onClick={() => props.toggleEditMoves(props.posn)} >Moves:</td>
-                    <td>
-                        <p>{props.pokemon.moves[0] ? formatString(props.pokemon.moves[0].move.name) : '[none]'}</p>
-                        <p>{props.pokemon.moves[1] ? formatString(props.pokemon.moves[1].move.name) : '[none]'}</p>
-                        <p>{props.pokemon.moves[2] ? formatString(props.pokemon.moves[2].move.name) : '[none]'}</p>
-                        <p>{props.pokemon.moves[3] ? formatString(props.pokemon.moves[3].move.name) : '[none]'}</p>
+                    <td className='toggle' onClick={handleToggleEditMoves} >Moves:</td>
+                    <td>{props.isEditingMoves === props.posn ? 
+                            <>
+                            <select className='firstMove' onChange={handleFirstMoveChange}>
+                                <option value=''>[none]</option>
+                                {props.pokemon.moves.map( (item, key) => <option value={item.move.name} key={key}>{item.move.name}</option>)}
+                            </select>
+                            <select className='secondMove' onChange={handleSecondMoveChange}>
+                                <option value=''>[none]</option>
+                                {props.pokemon.moves.map( (item, key) => <option value={item.move.name} key={key}>{item.move.name}</option>)}
+                            </select>
+                            <select className='thirdMove' onChange={handleThirdMoveChange}>
+                                <option value=''>[none]</option>
+                                {props.pokemon.moves.map( (item, key) => <option value={item.move.name} key={key}>{item.move.name}</option>)}
+                            </select>
+                            <select className='fourthMove' onChange={handleFourthMoveChange}>
+                                <option value=''>[none]</option>
+                                {props.pokemon.moves.map( (item, key) => <option value={item.move.name} key={key}>{item.move.name}</option>)}
+                            </select>
+                            <input type='button' className='moves-btn' onClick={handleSumbitMoves} value={'\u2713'} /></> :
+                            
+                            props.pokemon.chosenMoves ? 
+                                <>
+                                <p>{props.pokemon.chosenMoves[0] ? formatString(props.pokemon.chosenMoves[0]) : '[none]'}</p>
+                                <p>{props.pokemon.chosenMoves[1] ? formatString(props.pokemon.chosenMoves[1]) : '[none]'}</p>
+                                <p>{props.pokemon.chosenMoves[2] ? formatString(props.pokemon.chosenMoves[2]) : '[none]'}</p>
+                                <p>{props.pokemon.chosenMoves[3] ? formatString(props.pokemon.chosenMoves[3]) : '[none]'}</p>
+                                </>:
+                                <>
+                                <p>{props.pokemon.moves[0] ? formatString(props.pokemon.moves[0].move.name) : '[none]'}</p>
+                                <p>{props.pokemon.moves[1] ? formatString(props.pokemon.moves[1].move.name) : '[none]'}</p>
+                                <p>{props.pokemon.moves[2] ? formatString(props.pokemon.moves[2].move.name) : '[none]'}</p>
+                                <p>{props.pokemon.moves[3] ? formatString(props.pokemon.moves[3].move.name) : '[none]'}</p>
+                                </>
+                        }
                     </td>
                 </tr>
             </table>
