@@ -10,14 +10,13 @@ const TeamCard = props => {
     const handleNicknameChange = e => {
         setNickname(e.target.value)
     }
-    console.log(props)
     return (
         <div className='team-card'>
             <img src={props.pokemon.sprites.front_default} alt={props.pokemon.species.name}/>
             <table>
                 <tr>
-                    <td className='nickname-toggle' onClick={props.toggleEditNickname} >Nickname:</td>
-                    <td>{props.isEditingNickname ? 
+                    <td className='nickname-toggle' onClick={() => props.toggleEditNickname(props.posn)} >Nickname:</td>
+                    <td>{props.isEditingNickname === props.posn ? 
                             <form> <input className='nickname' type='text' onChange={handleNicknameChange}/><input className='nickname-btn' value={'\u2713'} onClick={() => props.addNickname(nickname, props.posn)} type='button'/> </form> :
                             props.pokemon.nickname ? props.pokemon.nickname : capitalize(props.pokemon.species.name)
                         }</td>

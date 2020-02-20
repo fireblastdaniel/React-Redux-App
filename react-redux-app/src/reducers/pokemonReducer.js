@@ -12,7 +12,7 @@ const initialState = {
     teamSize: 0,
     isFetchingData: false,
     error: '',
-    isEditingNickname: false
+    isEditingNickname: -1
 };
 
 export const pokemonReducer = (state = initialState, action) => {
@@ -51,12 +51,13 @@ export const pokemonReducer = (state = initialState, action) => {
                 ...state,
                 
                 team: state.team.map( (item, key) => key === action.payload.key ? {...state.team[key], nickname: action.payload.nickname} : {...state.team[key]} ),
-                isEditingNickname: false
+                isEditingNickname: -1
             }
         case TOGGLE_EDIT_NICKNAME:
+            console.log(action.payload)
             return {
                 ...state,
-                isEditingNickname: true
+                isEditingNickname: action.payload
             }
         default:
             return state;

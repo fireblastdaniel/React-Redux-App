@@ -10,10 +10,6 @@ const Team = props => {
     for(let i=0; i<6-props.teamSize; i++) {
         empty.push(<EmptyTeamCard key={ i+10 } />)
     }
-
-    const handleAddNickname = (nickname, key) => {
-        props.addNickname(nickname, key);
-    }
     console.log(props)
     return(
         <>
@@ -21,7 +17,7 @@ const Team = props => {
             <div className='team-container'>
                 {
                     props.team.map( (item, i) => (
-                            <TeamCard pokemon={item} key={i} posn={i} setNickname={handleAddNickname} />
+                            <TeamCard pokemon={item} key={i} posn={i} />
                     ))
                 }
                 {   empty.map( item => item)    }

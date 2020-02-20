@@ -25,8 +25,8 @@ export const clearTeam = () => dispatch => {
     dispatch({ type: CLEAR_TEAM });
 }
 
-export const toggleEditNickname = () => dispatch => {
-    dispatch({ type: TOGGLE_EDIT_NICKNAME });
+export const toggleEditNickname = (key) => dispatch => {
+    dispatch({ type: TOGGLE_EDIT_NICKNAME, payload: key });
 }
 
 export const addNickname = (nickname, key) => dispatch => {
