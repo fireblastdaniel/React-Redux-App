@@ -1,5 +1,12 @@
+*{
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
 }
 
 .App-logo {
@@ -35,4 +42,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.team-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.team-card{
+  border: 1px solid black;
+  width: 31%;
+  margin: 1%;
+  text-align: left;
+  padding: 1%;
+
+  display:flex;
+  flex-direction: column;
+}
+
+.team-card p{
+  margin: 1%;
+}
+
+.team-card img{
+  width: 70%;
+  margin: 0 auto;
+}
+
+.moves{
+  display: flex;
+}
+
+td{
+  vertical-align: top;
+}
+
+.moves p{
+  width: 100%;
+  margin-left: 20%;
 }

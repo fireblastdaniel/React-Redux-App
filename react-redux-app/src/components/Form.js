@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import {connect} from 'react-redux';
 
-import { getData } from '../actions';
+import { getData, clearTeam } from '../actions';
 import kantoPokemon from '../data/data';
 
 const Form = props => {
     const [activePokemon, setActivePokemon] = useState('')
-    console.log(activePokemon)
+
+    const handleGetData = e => {
+        if(props.teamSize < 6){
+            e.preventDefault();
+            props.getData(activePokemon);
+        } else {
+            //set warning of full team
+        }
+    }
 
     return (
         <div>
@@ -15,8 +23,8 @@ const Form = props => {
                     <option disabled selected value> -- Select a Pokemon -- </option>
                     {kantoPokemon.map( (item, dex) => <option value={item} key={dex}>{item}</option>)}
                 </select>
-                <input type='submit' value='Add to Team'/>
-                <input type='button' value='Clear Team' />
+                <input type='submit' onClick={handleGetData} value='Add to Team'/>
+                <input type='button' onClick={clearTeam} value='Clear Team' />
             </form>
         </div>
     );
@@ -24,11 +32,12 @@ const Form = props => {
 
 const mapStateToProps = state => {
     return {
-        isFetchingData: state.isFetchingData
+        isFetchingData: state.isFetchingData,
+        teamSize: state.teamSize
     };
 };
 
 export default connect(
     mapStateToProps,
-    { getData }
+    { getData, clearTeam }
 ) (Form);

@@ -4,6 +4,7 @@ export const FETCH_DATA = 'FETCH_DATA';
 export const UPDATE_TEAM = 'UPDATE_TEAM';
 export const CLEAR_TEAM = 'CLEAR_TEAM';
 export const SET_ERROR = 'SET_ERROR';
+
 export const getData = pokemonName => dispatch => {
     dispatch({ type: FETCH_DATA });
     axios
@@ -17,3 +18,7 @@ export const getData = pokemonName => dispatch => {
             dispatch({ type: SET_ERROR, payload: 'Error fetching data from api' });
         });
 };
+
+export const clearTeam = () => dispatch => {
+    dispatch({ type: CLEAR_TEAM });
+}
