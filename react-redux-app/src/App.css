@@ -7,6 +7,7 @@
   margin: 0 auto;
   width: 100%;
   max-width: 800px;
+  height: 90vh;
 }
 
 .App-logo {
@@ -47,12 +48,14 @@
 .team-container{
   display: flex;
   flex-wrap: wrap;
+  height: 90%;
 }
 
 .team-card{
   border: 1px solid black;
   border-radius: 12px;
   width: 31%;
+  height: 45%;
   margin: 1%;
   text-align: left;
   padding: 1%;
@@ -76,7 +79,7 @@
   width: 100%;
 }
 
-.nickname-toggle:hover{
+.toggle:hover{
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
@@ -101,4 +104,19 @@ td{
 .moves p{
   width: 100%;
   margin-left: 20%;
+}
+
+.remove{
+  position: relative;
+  font-weight: bold;
+  left: 90%;
+}
+
+.remove:hover{
+  cursor:pointer;
+  color:red;
+}
+
+.empty img{
+  margin: auto;
 }

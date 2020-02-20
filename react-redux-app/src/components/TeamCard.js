@@ -2,31 +2,48 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { formatString, capitalize } from '../actions/utilities'
 
-import { toggleEditNickname, addNickname } from '../actions';
+import { toggleEditNickname, addNickname, removePokemon, changeAbility, toggleEditAbility, changeMoves, toggleEditMoves } from '../actions';
 
 const TeamCard = props => {
-    const [nickname, setNickname] = useState('')
+    const [nickname, setNickname] = useState('');
+    const [ability, setAbility] = useState('')
 
     const handleNicknameChange = e => {
         setNickname(e.target.value)
     }
+
+    const handleAbilityChange = e => {
+        setAbility(e.target.value)
+    }
+    console.log(props)
     return (
+        
         <div className='team-card'>
+            <div className='remove' onClick={() => props.removePokemon(props.posn)}>X</div>
             <img src={props.pokemon.sprites.front_default} alt={props.pokemon.species.name}/>
             <table>
                 <tr>
-                    <td className='nickname-toggle' onClick={() => props.toggleEditNickname(props.posn)} >Nickname:</td>
+                    <td className='toggle' onClick={() => props.toggleEditNickname(props.posn)} >Nickname:</td>
                     <td>{props.isEditingNickname === props.posn ? 
                             <form> <input className='nickname' type='text' onChange={handleNicknameChange}/><input className='nickname-btn' value={'\u2713'} onClick={() => props.addNickname(nickname, props.posn)} type='button'/> </form> :
                             props.pokemon.nickname ? props.pokemon.nickname : capitalize(props.pokemon.species.name)
                         }</td>
                 </tr>
                 <tr>
-                    <td>Ability:</td>
-                    <td>{formatString(props.pokemon.abilities[0].ability.name)}</td>
+                    <td className='toggle' onClick={() => props.toggleEditAbility(props.posn)} >Ability:</td>
+                    <td>{props.isEditingAbility === props.posn ?
+                            <form> 
+                                <select className='ability' onChange={handleAbilityChange}>
+                                    <option value='[none]'>[none]</option>
+                                    {props.pokemon.abilities.map( (item, key) => <option value={item.ability.name} key={key}>{item.ability.name}</option>)}
+                                </select>
+                                <input className='nickname-btn' value={'\u2713'} onClick={() => props.changeAbility(ability, props.posn)} type='button'/>
+                            </form> :
+                            props.pokemon.chosenAbility ? formatString(props.pokemon.chosenAbility) : formatString(props.pokemon.abilities[0].ability.name)
+                        }</td>
                 </tr>
                 <tr>
-                    <td>Moves:</td>
+                    <td className='toggle' onClick={() => props.toggleEditMoves(props.posn)} >Moves:</td>
                     <td>
                         <p>{props.pokemon.moves[0] ? formatString(props.pokemon.moves[0].move.name) : '[none]'}</p>
                         <p>{props.pokemon.moves[1] ? formatString(props.pokemon.moves[1].move.name) : '[none]'}</p>
@@ -42,11 +59,13 @@ const TeamCard = props => {
 
 const mapStateToProps = state => {
     return {
-        isEditingNickname: state.isEditingNickname
+        isEditingNickname: state.isEditingNickname,
+        isEditingAbility: state.isEditingAbility,
+        isEditingMoves: state.isEditingMoves
     }
 }
 
 export default connect(
     mapStateToProps,
-    { toggleEditNickname, addNickname }
+    { toggleEditNickname, addNickname, removePokemon, changeAbility, toggleEditAbility, changeMoves, toggleEditMoves }
 ) (TeamCard);

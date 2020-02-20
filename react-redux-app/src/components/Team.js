@@ -10,7 +10,6 @@ const Team = props => {
     for(let i=0; i<6-props.teamSize; i++) {
         empty.push(<EmptyTeamCard key={ i+10 } />)
     }
-    console.log(props)
     return(
         <>
         {!props.error ? (
